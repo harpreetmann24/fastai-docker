@@ -20,6 +20,15 @@ RUN python3 -m pip install --upgrade gradient
 RUN python3 -m pip install --upgrade ipywidgets
 RUN python3 -m pip install --upgrade transformers[torch]
 RUN python3 -m pip install --upgrade fastbook
+RUN python3 -m pip install --upgrade gensim 
+RUN python3 -m pip install --upgrade swifter
+RUN python3 -m pip install --upgrade datasets 
+RUN python3 -m pip install --upgrade pytorch-lightning 
+RUN python3 -m pip install --upgrade gensim feature-engine 
+RUN python3 -m pip install --upgrade gensim imutils 
+RUN python3 -m pip install --upgrade bs4 
+RUN python3 -m pip install --upgrade torchviz 
+
 RUN apt update
 RUN apt install software-properties-common -y
 RUN add-apt-repository ppa:deadsnakes/ppa -y
@@ -33,11 +42,13 @@ RUN echo '\nalias python=python3.9\nalias python3=python3.9\n' >> ~/.bashrc
 RUN echo 'if [ -f /storage/.bash.local ]; then\n . /storage/.bash.local \nfi' >> ~/.bashrc 
 
 ENV USER fastai
-WORKDIR /notebooks
-RUN chmod -R a+w /notebooks
-WORKDIR /notebooks
+#WORKDIR /notebooks
+#RUN chmod -R a+w /notebooks
+#WORKDIR /notebooks
 
-COPY config.ini /root/.fastai/config.ini
-COPY run.sh /run.sh
+#COPY config.ini /root/.fastai/config.ini
+#COPY run.sh /run.sh
 
-CMD ["/run.sh"]
+#CMD ["/run.sh"]
+
+CMD ["bash", "-c", "source /etc/bash.bashrc && jupyter lab --allow-root --ip=0.0.0.0 --no-browser --ServerApp.trust_xheaders=True --ServerApp.disable_check_xsrf=False --ServerApp.allow_remote_access=True --ServerApp.allow_origin='*' --ServerApp.allow_credentials=True"]
